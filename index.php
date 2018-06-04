@@ -77,6 +77,35 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         $profile    = $getprofile->getJSONDecodedBody();
         $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
         $a = (explode('-',$event['message']['text']));
+        if ($a[0]=="/help") {
+          $menu="/userid -> mendapatkan userId\n"
+          ."/groupid -> mendapatkan groupId\n"
+          ."/sms-nomortujuan-isipesan -> mengirimkan pesan gratis melalui bot\n"
+          ."/jadwal-wilayah -> melihat jadwal waktu Sholat\n"
+          ."/IPK-NIM -> Khusus Mahasiswa Brawijaya dapat melihat detail IP dan IPK :v\n"
+          ."==========================\n"
+          ."bot ini juga bisa menyimpan NOTE atau catatan kecil\n"
+          ."1.menambah note\n"
+          ."/tambah-nama note-detail note\n"
+          ."ex: /tambah-pemweb-kelas F2.2\n"
+          ."2.melihat semua note\n"
+          ."/semua\n"
+          ."3.melihat detail note\n"
+          ."/detail-nama note\n"
+          ."ex: /detail-pemweb\n"
+          ."4.menghapus note\n"
+          ."/hapus-nama note\n"
+          ."ex: /hapus-pemweb\n"
+          ."5. next update, melakukan sunting jadwal\n"
+          ."==========================\n"
+          ."terakhir\nbot ini juga dapat menjalankan kode program sederhana PHP\n"
+          ."langsung coba saja\n"
+          ."<?php\n"
+          ."echo \"test\";"
+          ."\n==========================\nSource Code : github.com/foneazmi/LineBotPHP"
+          ;
+          $result = $bot->replyText($event['replyToken'], $menu);
+        }
         if ($a[0]=="/userid") {
           $result = $bot->replyText($event['replyToken'], $userId);
         }
@@ -293,7 +322,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
           }
         }
       }
-      
+
     });
     $app->get('/profile/{userId}', function($req, $res) use ($bot)
     {
