@@ -224,6 +224,14 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 ."\n================";
                 $result = $bot->replyText($event['replyToken'], $hasilnya);
               }
+              if ($a[0]=="/yt") {
+                $yt=file_get_contents('https://www.youtube.com/results?search_query='.urlencode($a[1]));
+                $plm=strpos($yt,'<a aria-hidden="true"')+29;
+                $pla=strpos($yt,'"',$plm);
+                $link=substr($yt, $plm,$pla-$plm);
+                $hasilnya= "http://youtube.com".htmlspecialchars($link);
+                $result = $bot->replyText($event['replyToken'], $hasilnya);
+              }
 
             }
             if(
