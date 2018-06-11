@@ -46,7 +46,7 @@ class DataSiam{
 		{
 			$aDataTableHeaderHTML[] = trim($NodeHeader->textContent);
 		}
-		
+
 		if (substr(htmlspecialchars($nama),0,2)=="PE") {
 			return "Akun Di LOCK";
 		}else{
@@ -58,8 +58,8 @@ class DataSiam{
 			."\n==================\n";
 			for ($i=1; $i < count($aDataTableHeaderHTML)-5; $i++) {
 				$matkul=explode("      ",$aDataTableHeaderHTML[$i]);
-				$data=$data."--no : ".$matkul[0]."---SKS : ".substr($matkul[3],2)."--\n"
-				."Kode : ".substr($matkul[1],2)."\n"
+				$data=$data."-----no : ".$matkul[0]."-----\n"
+				."Kode : ".substr($matkul[1],2)."  ".substr($matkul[3],2)." sks\n"
 				."Matkul : ".substr($matkul[2],5)."\n"
 				."Nilai : ".substr($matkul[4],2)."\n";
 			}

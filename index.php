@@ -147,7 +147,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
           $gg = new DataSiam();
           $result = $bot->replyText($event['replyToken'], $gg->get_data($a[1]));
         }
-
         // // Coba
         // if($a[0] == "/coba1"){
         //   $buttonTemplateBuilder = new ButtonTemplateBuilder(
