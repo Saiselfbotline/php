@@ -80,6 +80,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         if ($a[0]=="/help") {
           $menu="/userid -> mendapatkan userId\n"
           ."/groupid -> mendapatkan groupId\n"
+          //."/yt-keyword -> menampilkan video youtube\n"
           ."/sms-nomortujuan-isipesan -> mengirimkan pesan gratis melalui bot\n"
           ."/jadwal-wilayah -> melihat jadwal waktu Sholat\n"
           ."/IPK-NIM -> Khusus Mahasiswa Brawijaya dapat melihat detail IP dan IPK :v\n"
@@ -106,13 +107,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
           ;
           $result = $bot->replyText($event['replyToken'], $menu);
         }
-        if ($a[0]=="/userid") {
+        else if ($a[0]=="/userid") {
           $result = $bot->replyText($event['replyToken'], $userId);
         }
-        if ($a[0]=="/groupid") {
+        else if ($a[0]=="/groupid") {
           $result = $bot->replyText($event['replyToken'], $event['source']['groupId']);
         }
-        if ($a[0]=="/sms") {
+        else if ($a[0]=="/sms") {
           $xmlString = file_get_contents(getenv("smsapi").urlencode($a[1])."&pesan=".urlencode($a[2]));
           $xml = new SimpleXMLElement($xmlString);
           $hasil="SMS ke nomor ".$a[1].", Status : ".$xml->message->text;
@@ -142,11 +143,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
           );
           $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?'.http_build_query($data));
           $result = $bot->replyText($event['replyToken'], $babi);
-        }else if($a[0]=="/IPK"){
+        }
+        else if($a[0]=="/IPK"){
           include 'ScrapingSIAM/potong.php';
           $gg = new DataSiam();
           $result = $bot->replyText($event['replyToken'], $gg->get_data($a[1]));
         }
+
         // // Coba
         // if($a[0] == "/coba1"){
         //   $buttonTemplateBuilder = new ButtonTemplateBuilder(
@@ -223,7 +226,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 ."\n================";
                 $result = $bot->replyText($event['replyToken'], $hasilnya);
               }
-              if ($a[0]=="/yt") {
+              else if ($a[0]=="/yt") {
                 $yt=file_get_contents('https://www.youtube.com/results?search_query='.urlencode($a[1]));
                 $plm=strpos($yt,'<a aria-hidden="true"')+29;
                 $pla=strpos($yt,'"',$plm);
@@ -231,7 +234,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 $hasilnya= "http://youtube.com".htmlspecialchars($link);
                 $result = $bot->replyText($event['replyToken'], $hasilnya);
               }
-
             }
             if(
               $event['source']['type'] == 'group' or
