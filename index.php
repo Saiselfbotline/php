@@ -78,6 +78,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
         $a = (explode('-',$event['message']['text']));
         if($a[0] == "/help"){
+          $phpnya="<?php\necho \"tulis aja disini kode phpnya\";";
           $carouselTemplateBuilder = new CarouselTemplateBuilder([
             new CarouselColumnTemplateBuilder("Menu", "Menu FoneBot","https://farkhan.000webhostapp.com/b1.jpg",[
               new MessageTemplateActionBuilder('SMS','/sms'),
@@ -85,7 +86,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
               new MessageTemplateActionBuilder('Jadwal Sholat','/jadwal'),
             ]),
             new CarouselColumnTemplateBuilder("Menu", "Menu FoneBot ","https://farkhan.000webhostapp.com/b1.jpg",[
-              new MessageTemplateActionBuilder('PHP','/php'),
+              new MessageTemplateActionBuilder('PHP',$phpnya),
               new MessageTemplateActionBuilder('UserID','/userid'),
               new MessageTemplateActionBuilder('GroupID','/groupid'),
             ]),
